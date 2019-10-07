@@ -2,8 +2,6 @@ import React from 'react';
 import Radium from 'radium';
 
 const Todos = props => {
-  console.log('from todos...', props.sendIsCompleted);
-
   return (
     <div>
       <li

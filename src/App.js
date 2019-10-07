@@ -26,6 +26,7 @@ class App extends Component {
       todos: [...this.state.todos, this.state.todo],
       completions: [...this.state.completions, false]
     });
+    console.log(this.state.completions);
   };
   deleteTask = index => {
     this.setState({
@@ -34,8 +35,9 @@ class App extends Component {
   };
   isCompleted = index => {
     this.setState({
-      isCompleted: !this.state.isCompleted
+      completions: [...this.state.completions[index], !this.state.isCompleted]
     });
+    console.log(this.state.completions);
   };
 
   render() {
@@ -46,7 +48,7 @@ class App extends Component {
           todo={todo}
           deleteTask={() => this.deleteTask(index)}
           completed={() => this.isCompleted(index)}
-          sendIsCompleted={this.state.isCompleted}
+          // sendCompletions={this.state.completions}
         />
       );
     });
