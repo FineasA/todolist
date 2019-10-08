@@ -1,27 +1,29 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Radium from 'radium';
 
-const Todos = props => {
-  return (
-    <div>
-      <li
-        key={props.key}
-        style={
-          (listStyle,
-          props.sendIsCompleted ? { textDecoration: 'line-through' } : null)
-        }
-      >
-        {props.todo}
-      </li>
-      <button key={1} style={taskButtons} onClick={props.completed}>
-        Mark Completed
-      </button>
-      <button key={2} style={taskButtons} onClick={props.deleteTask}>
-        Delete Task
-      </button>
-    </div>
-  );
-};
+/*IMPORTANT: THE ISSUE IS THE LOGIC BEHIND WHEN THE CONDITIONAL BECOMES TRUE.
+ **WHEN YOU ARE CLICKING THE BUTTON THAT MARKS COMPLETION, THERE IS ONLY ONE STATE
+ **FOR ALL ELEMENTS. THE BEST WAY TO SOLVING THIS ISSUE IS CREATING IN YOUR ORIGINAL STATE
+ **AND ARRAY OF OBJECTS THAT CONTAIN TASKS WHICH CONTAIN TODO, AND THE STATE OF COMPLETION
+ **(I.E. INITIALIZED AT FALSE)
+ */
+class Todos extends Component {
+  render() {
+    return (
+      <div>
+        <li key={this.props.key} style={this.props.styleFxn}>
+          {this.props.todo}
+          <button key={1} style={taskButtons} onClick={this.props.completed}>
+            Mark Completed
+          </button>
+          <button key={2} style={taskButtons} onClick={this.props.deleteTask}>
+            Delete Task
+          </button>
+        </li>
+      </div>
+    );
+  }
+}
 
 const listStyle = {
   listStyleType: 'none',

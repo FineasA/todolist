@@ -11,7 +11,6 @@ class App extends Component {
     this.state = {
       todos: [],
       todo: '',
-      completions: [],
       isCompleted: false
     };
   }
@@ -23,10 +22,10 @@ class App extends Component {
   };
   addTask = () => {
     this.setState({
-      todos: [...this.state.todos, this.state.todo],
-      completions: [...this.state.completions, false]
+      todos: [...this.state.todos, this.state.todo]
+      // completions: [...this.state.completions, false]
     });
-    console.log(this.state.completions);
+    // console.log(this.state.completions);
   };
   deleteTask = index => {
     this.setState({
@@ -35,9 +34,9 @@ class App extends Component {
   };
   isCompleted = index => {
     this.setState({
-      completions: [...this.state.completions[index], !this.state.isCompleted]
+      isCompleted: !this.state.isCompleted
     });
-    console.log(this.state.completions);
+    console.log(this.state.isCompleted);
   };
 
   render() {
@@ -48,14 +47,20 @@ class App extends Component {
           todo={todo}
           deleteTask={() => this.deleteTask(index)}
           completed={() => this.isCompleted(index)}
-          // sendCompletions={this.state.completions}
+          styleFxn={
+            this.state.isCompleted ? { textDecoration: 'line-through' } : null
+          }
+          // sendCompletions={this.state.isCompleted}
         />
       );
     });
     return (
       <div className='App'>
         <h1 style={headerStyling}>Todo List App</h1>
-        <Todo changed={this.updateToDo} submit={this.addTask} />
+        <Todo
+          changed={this.updateToDo}
+          submit={this.addTask.bind(this.addTask, this)}
+        />
         {todosTasks}
       </div>
     );
@@ -71,6 +76,11 @@ const headerStyling = {
   fontSize: '30px'
 };
 
-export default App;
+export default Radium(App);
+
+//completions: [
+//   ...this.state.completions,
+//   this.state.completions[index] === !this.state.isCompleted
+// ]
 
 //[...this.state.task.todos, this.state.task.todo]
